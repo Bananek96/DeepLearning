@@ -1,0 +1,8 @@
+https://github.com/topics/speech-synthesis
+https://github.com/topics/voice-synthesis?l=python
+https://thinkinfi.com/convert-text-to-speech-with-deep-learning-in-python/
+https://opendatascience.com/brand-voice-deep-learning-for-speech-synthesis/
+http://www.surfing.ai/speech-dataset/?gclid=Cj0KCQiA0oagBhDHARIsAI-BbgeMTZjgRCrkYmZuWWfJ9Y8zU76VVaH5WUBZ6KmShorZvaY4AMznzDgaAjq_EALw_wcB
+https://aws.amazon.com/free/?trk=f17b4b4e-aa1b-4189-b0c4-81a19b53f625&sc_channel=ps&s_kwcid=AL!4422!3!645186168166!e!!g!!aws&ef_id=Cj0KCQiA0oagBhDHARIsAI-BbgfIP1IzD1E2f-_Sl-_aX_56MaWv7ue29uRjcmK0u-sqcUfDvZ0yZHoaAn_uEALw_wcB:G:s&s_kwcid=AL!4422!3!645186168166!e!!g!!aws&all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all
+https://azure.microsoft.com/en-us/free/search/?&ef_id=Cj0KCQiA0oagBhDHARIsAI-BbgdhuDjVz-km1Y9cqPbhfXwWBhHc-uU9F0Bw_zpvtlm4eDp6hab0pSQaAqhDEALw_wcB:G:s&OCID=AIDcmm4rphvbww_SEM_Cj0KCQiA0oagBhDHARIsAI-BbgdhuDjVz-km1Y9cqPbhfXwWBhHc-uU9F0Bw_zpvtlm4eDp6hab0pSQaAqhDEALw_wcB:G:s&gclid=Cj0KCQiA0oagBhDHARIsAI-BbgdhuDjVz-km1Y9cqPbhfXwWBhHc-uU9F0Bw_zpvtlm4eDp6hab0pSQaAqhDEALw_wcB
+https://www.youtube.com/watch?v=8k8S5ruFAUs
