@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1bf2505-ca4f-4f17-98ca-ad5ff312b688" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/DeepLearning.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DeepLearning.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tacotron2/inference.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/tacotron2/inference.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,6 +50,7 @@
       <workItem from="1678739016380" duration="868000" />
       <workItem from="1678741279647" duration="110000" />
       <workItem from="1678741471008" duration="128000" />
+      <workItem from="1678966275207" duration="34000" />
     </task>
     <servers />
   </component>
