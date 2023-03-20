@@ -5,9 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1bf2505-ca4f-4f17-98ca-ad5ff312b688" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/DeepLearning.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DeepLearning.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tacotron2/inference.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/tacotron2/inference.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tacotron2/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tacotron2/requirements.txt" afterDir="false" />
@@ -16,6 +13,14 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/tacotron2" />
@@ -30,6 +35,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
@@ -56,10 +62,16 @@
       <workItem from="1678741471008" duration="128000" />
       <workItem from="1678966707341" duration="76000" />
       <workItem from="1678966849283" duration="16000" />
+      <workItem from="1678967166310" duration="8000" />
+      <workItem from="1679234900367" duration="24000" />
+      <workItem from="1679316873574" duration="5070000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/DeepLearning$views.coverage" NAME="views Coverage Results" MODIFIED="1679320970570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/website/tacotron" />
   </component>
 </project>
