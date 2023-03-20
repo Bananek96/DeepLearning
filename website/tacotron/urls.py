@@ -3,5 +3,5 @@ from . import views
 
 app_name = 'tacotron'
 urlpatterns = [
-    path('', views.tacotron2_view, name='index'),
+    path('', views.generate_audio, name='index'),
 ]

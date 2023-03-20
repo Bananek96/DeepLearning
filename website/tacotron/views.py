@@ -1,35 +1,61 @@
-import torch
-import librosa.display
-import matplotlib.pyplot as plt
 import IPython.display as ipd
+import matplotlib.pyplot as plt
+import numpy as np
+import torch
+from django.http import HttpResponse
 from django.shortcuts import render
 
+from django_for_jupyter import init_django
+from hparams import create_hparams
+from layers import STFT
+from audio_processing import griffin_lim
+from train import load_model
+from text import text_to_sequence
+from waveglow.denoiser import Denoiser
 
-def tacotron2_view(request):
-    # Wczytaj model Tacotron2
-    sciezka = "D:\github\For_Project\tacotron2_statedict.pt"
-    # sciezka = "C:\Users\piter\Desktop\GitHub\ForProject\tacotron2_statedict.pt"
-    # sciezka = "C:\Users\huber\Desktop\0STUDIA\Projekt_Neuronówa\For_Project\tacotron2_statedict.pt"
-    model = torch.load(sciezka, map_location=torch.device('cpu'))
 
-    # Wczytaj przykładowy plik dźwiękowy
-    sample = 'D:\github\For_Project\waveglow_256channels.pt'
-    # sample = 'C:\Users\piter\Desktop\GitHub\ForProject\waveglow_256channels.pt'
-    # sample = 'C:\Users\huber\Desktop\0STUDIA\Projekt_Neuronówa\For_Project\waveglow_256channels.pt'
-    audio, sr = librosa.load(sample, sr=22050)
+def plot_data(data, figsize=(16, 4)):
+    fig, axes = plt.subplots(1, len(data), figsize=figsize)
+    for i in range(len(data)):
+        axes[i].imshow(data[i], aspect='auto', origin='bottom',
+                       interpolation='none')
 
-    # Wygeneruj sekwencję mel-spectrogramu za pomocą modelu Tacotron2
-    mel_outputs, mel_outputs_postnet, _, alignments = model.inference(audio)
 
-    # Wyświetl wykres mel-spectrogramu
-    plt.figure(figsize=(10, 4))
-    librosa.display.specshow(mel_outputs_postnet.cpu().numpy().T, sr=sr, hop_length=256, y_axis='mel', x_axis='time')
-    plt.colorbar(format='%+2.0f dB')
-    plt.title('Mel-Spectrogram')
-    plt.tight_layout()
+def generate_audio(request):
+    init_django("website")  # assuming 'website' is the name of your Django project
+    hparams = create_hparams()
+    hparams.sampling_rate = 22050
+    
+    checkpoint_path = "D:\github\For_Project\tacotron2_statedict.pt"
+    # checkpoint_path = "C:\Users\piter\Desktop\GitHub\ForProject\tacotron2_statedict.pt"
+    # checkpoint_path = "C:\Users\huber\Desktop\0STUDIA\Projekt_Neuronówa\For_Project\tacotron2_statedict.pt"
 
-    # Wyświetl przykładowy plik dźwiękowy
-    ipd.display(ipd.Audio(audio, rate=sr))
+    waveglow_path = 'D:\github\For_Project\waveglow_256channels.pt'
+    # waveglow_path = 'C:\Users\piter\Desktop\GitHub\ForProject\waveglow_256channels.pt'
+    # waveglow_path = 'C:\Users\huber\Desktop\0STUDIA\Projekt_Neuronówa\For_Project\waveglow_256channels.pt'
 
-    # Zwróć widok
-    return render(request, 'index.html', context={'alignments': alignments.T})
+    model = load_model(hparams)
+    model.load_state_dict(torch.load(checkpoint_path)['state_dict'])
+    model = model.cuda().eval().half()
+
+    waveglow = torch.load(waveglow_path)['model']
+    waveglow.cuda().eval().half()
+    for k in waveglow.convinv:
+        k.float()
+    denoiser = Denoiser(waveglow)
+
+    if request.method == 'POST':
+        text = request.POST['text']
+        sequence = np.array(text_to_sequence(text, ['english_cleaners']))[None, :]
+        sequence = torch.autograd.Variable(torch.from_numpy(sequence)).cuda().long()
+        mel_outputs, mel_outputs_postnet, _, alignments = model.inference(sequence)
+        with torch.no_grad():
+            audio = waveglow.infer(mel_outputs_postnet, sigma=0.666)
+            audio_denoised = denoiser(audio, strength=0.01)[:, 0]
+        response = HttpResponse(content_type='audio/wav')
+        griffin_audio = griffin_lim(mel_outputs_postnet.float().data.cpu().numpy()[0], stft_fn=STFT())
+        ipd.Audio(griffin_audio, rate=hparams.sampling_rate)
+        response.write(audio_denoised.cpu().numpy().tobytes())
+        return response
+
+    return render(request, 'index.html')
