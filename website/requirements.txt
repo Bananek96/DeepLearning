@@ -1,8 +1,0 @@
-matplotlib
-tensorflow
-numpy
-inflect
-librosa
-scipy
-Unidecode
-pillow
