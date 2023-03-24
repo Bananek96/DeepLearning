@@ -3,5 +3,5 @@ from . import views
 
 app_name = 'main'
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.generate_speech, name='index'),
 ]
