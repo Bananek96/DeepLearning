@@ -1,25 +1,10 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# ## Tacotron 2 inference code 
-# Edit the variables **checkpoint_path** and **text** to match yours and run the entire code to generate plots of mel outputs, alignments and audio synthesis from the generated mel-spectrogram using Griffin-Lim.
-
-# #### Import libraries and setup matplotlib
-
-# In[1]:
-
-
+# Import libraries and setup matplotlib
 import matplotlib
-get_ipython().run_line_magic('matplotlib', 'inline')
 import matplotlib.pylab as plt
-
 import IPython.display as ipd
-
 import sys
-sys.path.append('waveglow/')
 import numpy as np
 import torch
-
 from hparams import create_hparams
 from model import Tacotron2
 from layers import TacotronSTFT, STFT
@@ -29,92 +14,56 @@ from text import text_to_sequence
 from waveglow.denoiser import Denoiser
 
 
-# In[2]:
+# Setup matplotlib
+matplotlib.use("Agg")
 
 
 def plot_data(data, figsize=(16, 4)):
     fig, axes = plt.subplots(1, len(data), figsize=figsize)
     for i in range(len(data)):
-        axes[i].imshow(data[i], aspect='auto', origin='bottom', 
+        axes[i].imshow(data[i], aspect='auto', origin='bottom',
                        interpolation='none')
 
 
-# #### Setup hparams
-
-# In[3]:
-
-
+# Setup hparams
 hparams = create_hparams()
 hparams.sampling_rate = 22050
 
-
-# #### Load model from checkpoint
-
-# In[4]:
-
-
-checkpoint_path = "D:\github\For_Project\tacotron2_statedict.pt"
-#checkpoint_path = "C:\Users\piter\Desktop\GitHub\ForProject\tacotron2_statedict.pt"
-#checkpoint_path = "C:\Users\huber\Desktop\0STUDIA\Projekt_Neuronówa\For_Project\tacotron2_statedict.pt"
-
+# Load model from checkpoint
+checkpoint_path = "D:/github/For_Project/tacotron2_statedict.pt"
+# checkpoint_path = "C:/Users/piter/Desktop/GitHub/ForProject/tacotron2_statedict.pt"
+# checkpoint_path = "C:/Users/huber/Desktop/0STUDIA/Projekt_Neuronówa/For_Project/tacotron2_statedict.pt"
 model = load_model(hparams)
-model.load_state_dict(torch.load(checkpoint_path)['state_dict'])
+model.load_state_dict(torch.load(checkpoint_path, map_location=torch.device('cpu'))['state_dict'])
 _ = model.cuda().eval().half()
 
-
-# #### Load WaveGlow for mel2audio synthesis and denoiser
-
-# In[5]:
-
-
-waveglow_path = 'D:\github\For_Project\waveglow_256channels.pt'
-#waveglow_path = 'C:\Users\piter\Desktop\GitHub\ForProject\waveglow_256channels.pt'
-#waveglow_path = 'C:\Users\huber\Desktop\0STUDIA\Projekt_Neuronówa\For_Project\waveglow_256channels.pt'
-
-waveglow = torch.load(waveglow_path)['model']
+# Load WaveGlow for mel2audio synthesis and denoiser
+waveglow_path = 'D:/github/For_Project/waveglow_256channels.pt'
+# waveglow_path = 'C:/Users/piter/Desktop/GitHub/ForProject/waveglow_256channels.pt'
+# waveglow_path = 'C:/Users/huber/Desktop/0STUDIA/Projekt_Neuronówa/For_Project/waveglow_256channels.pt'
+waveglow = torch.load(waveglow_path, map_location=torch.device('cpu'))['model']
 waveglow.cuda().eval().half()
 for k in waveglow.convinv:
     k.float()
 denoiser = Denoiser(waveglow)
 
-
-# #### Prepare text input
-
-# In[6]:
-
-
+# Prepare text input
 text = "Waveglow is really awesome!"
 sequence = np.array(text_to_sequence(text, ['english_cleaners']))[None, :]
-sequence = torch.autograd.Variable(
-    torch.from_numpy(sequence)).cuda().long()
+sequence = torch.autograd.Variable(torch.from_numpy(sequence)).cuda().long()
 
-
-# #### Decode text input and plot results
-
-# In[7]:
-
-
-mel_outputs, mel_outputs_postnet, _, alignments = model.inference(sequence)
+# Decode text input and plot results
+with torch.no_grad():
+    mel_outputs, mel_outputs_postnet, _, alignments = model.inference(sequence)
 plot_data((mel_outputs.float().data.cpu().numpy()[0],
            mel_outputs_postnet.float().data.cpu().numpy()[0],
            alignments.float().data.cpu().numpy()[0].T))
 
-
-# #### Synthesize audio from spectrogram using WaveGlow
-
-# In[8]:
-
-
+# Synthesize audio from spectrogram using WaveGlow
 with torch.no_grad():
     audio = waveglow.infer(mel_outputs_postnet, sigma=0.666)
 ipd.Audio(audio[0].data.cpu().numpy(), rate=hparams.sampling_rate)
 
-
-# #### (Optional) Remove WaveGlow bias
-
-# In[9]:
-
-
+# (Optional) Remove WaveGlow bias
 audio_denoised = denoiser(audio, strength=0.01)[:, 0]
-ipd.Audio(audio_denoised.cpu().numpy(), rate=hparams.sampling_rate) 
-
+ipd.Audio(audio_denoised.cpu().numpy(), rate=hparams.sampling_rate)

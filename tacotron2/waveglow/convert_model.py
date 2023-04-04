@@ -2,6 +2,7 @@ import sys
 import copy
 import torch
 
+
 def _check_model_old_version(model):
     if hasattr(model.WN[0], 'res_layers') or hasattr(model.WN[0], 'cond_layers'):
         return True
@@ -34,6 +35,7 @@ def _update_model_res_skip(old_model, new_model):
         del wavenet.res_layers
         del wavenet.skip_layers
 
+
 def _update_model_cond(old_model, new_model):
     for idx in range(0, len(new_model.WN)):
         wavenet = new_model.WN[idx]
@@ -53,6 +55,7 @@ def _update_model_cond(old_model, new_model):
         wavenet.cond_layer = cond_layer
         del wavenet.cond_layers
 
+
 def update_model(old_model):
     if not _check_model_old_version(old_model):
         return old_model
@@ -62,6 +65,7 @@ def update_model(old_model):
     if hasattr(old_model.WN[0], 'cond_layers'):
         _update_model_cond(old_model, new_model)
     return new_model
+
 
 if __name__ == '__main__':
     old_model_path = sys.argv[1]
