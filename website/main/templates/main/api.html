@@ -1,0 +1,18 @@
+# template.html
+{% extends "szablon.html" %}
+
+{% block tresc %}
+    <form method="post" action="{% url 'tacotron2_api' %}">
+        {% csrf_token %}
+        <label for="text">Enter text:</label>
+        <input type="text" id="text" name="text"><br><br>
+        <button type="submit">Generate Speech</button>
+    </form>
+
+    {% if speech %}
+        <h2>Generated Speech:</h2>
+        <audio controls>
+            <source src="{{ speech }}" type="audio/wav">
+        </audio>
+    {% endif %}
+{% endblock %}
