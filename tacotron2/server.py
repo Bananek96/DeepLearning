@@ -22,7 +22,7 @@ model = load_model(hparams)
 model.load_state_dict(torch.load(checkpoint_path)['state_dict'])
 _ = model.cuda().eval().half()
 
-waveglow_path = 'D:/github/For_Project/waveglow_256channels.pt'
+waveglow_path = 'D:/github/For_Project/waveglow_256channels_universal_v5.pt'
 # waveglow_path = 'C:\Users\piter\Desktop\GitHub\ForProject\waveglow_256channels.pt'
 # waveglow_path = 'C:\Users\huber\Desktop\0STUDIA\Projekt_Neuronówa\For_Project\waveglow_256channels.pt'
 
