@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/tacotron2.iml" filepath="$PROJECT_DIR$/.idea/tacotron2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/tacotron.iml" filepath="$PROJECT_DIR$/.idea/tacotron.iml" />
     </modules>
   </component>
 </project>

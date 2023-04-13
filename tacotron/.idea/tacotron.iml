@@ -5,11 +5,4 @@
     <orderEntry type="jdk" jdkName="DeepLearning" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
-  <component name="PackageRequirementsSettings">
-    <option name="requirementsPath" value="requirements1.txt" />
-  </component>
-  <component name="PyDocumentationSettings">
-    <option name="format" value="NUMPY" />
-    <option name="myDocStringFormat" value="NumPy" />
-  </component>
 </module>
