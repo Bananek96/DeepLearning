@@ -3,5 +3,5 @@ from . import views
 
 app_name = 'main'
 urlpatterns = [
-    path('', views.generate_speech, name='index'),
+    path('', views.GenerateSpeechView.as_view(), name='index'),
 ]
