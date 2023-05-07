@@ -1,8 +1,8 @@
 {% extends 'szablon.html' %}
 {% block tresc %}
 
-    <form method="GET" action="{% url 'main:index' %}">
-      <textarea name="text"></textarea>
+    <form method="POST" action="{% url 'main:index' %}">{% csrf_token %}
+      <textarea rows="10" style="height: 100%; width: 100%;" name="text"></textarea>
       <button type="submit">Generate Speech</button>
     </form>
 
