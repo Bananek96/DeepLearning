@@ -1,9 +1,16 @@
 {% extends 'szablon.html' %}
-{% block tresc %}
+{% block content %}
+    <div class="row">
+        <form method="POST" action="{% url 'main:index' %}">{% csrf_token %}
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <p></p>
+                    <textarea rows="22" style="height: 100%; width: 75%; display: block; margin-right: auto; margin-left: auto;" name="text"></textarea>
+                    <p></p>
+                    <button type="submit" style="height: 15%; width: 75%; display: block; margin-right: auto; margin-left: auto;" class="btn btn-dark">Generate Speech</button>
+                </div>
+            </div>
+        </form>
+    </div>
 
-    <form method="POST" action="{% url 'main:index' %}">{% csrf_token %}
-      <textarea rows="10" style="height: 100%; width: 100%;" name="text"></textarea>
-      <button type="submit">Generate Speech</button>
-    </form>
-
-{% endblock tresc %}
+{% endblock content %}

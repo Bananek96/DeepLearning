@@ -1,8 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.views import View
-from pydub import AudioSegment
-import io
 import requests
 
 
