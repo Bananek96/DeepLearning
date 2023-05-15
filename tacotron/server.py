@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-from flask import Flask, request, jsonify
+from flask import Flask, request, Response
 
 app = Flask(__name__)
 
@@ -26,7 +26,15 @@ class Tacotron:
         from scipy.io.wavfile import write
         write("audio.wav", rate, audio_numpy)
 
-        return audio_numpy
+        # return audio_numpy
+
+        # return the audio data as a byte string instead of writing to file
+        from io import BytesIO
+        with BytesIO() as output:
+            write(output, rate, audio_numpy)
+            audio_bytes = output.getvalue()
+
+        return audio_bytes
 
 
 @app.route('/', methods=['GET', "POST"])
@@ -34,7 +42,8 @@ def generate_speech():
     text = request.args.get('text')
     model_instance = Tacotron()
     audio = model_instance.generate(text)
-    return audio, 200
+
+    return Response(audio, mimetype='audio/wav')
 
 
 if __name__ == '__main__':

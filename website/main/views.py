@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views import View
+from pydub import AudioSegment
+import io
 import requests
 
 
@@ -16,19 +18,15 @@ class GenerateSpeechView(View):
             if not text:
                 return HttpResponse(status=400, content='Missing "text" parameter')
 
-        # send request to Flask server
+            # send request to Flask server
             response = requests.get('http://localhost:5000', params={'text': text})
 
         # return audio file
-        audio_content = response.content
+        audio_bytes = response.content
+
+        # create a response with the audio data as the content
         response = HttpResponse(content_type='audio/wav')
         response['Content-Disposition'] = 'attachment; filename="audio.wav"'
-        response.write(audio_content)
+        response.write(audio_bytes)
+
         return response
-# def generate_speech(request):
-#     if request.method == 'POST':
-#         text = request.POST.get('text')
-#         response = requests.post('http://localhost:5000', params={'text': text})
-#         return render(request, template_name)
-#     else:
-#         return  render(request, template_name)
