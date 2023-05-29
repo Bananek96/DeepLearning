@@ -1,0 +1,17 @@
+{% extends 'szablon.html' %}
+{% block content %}
+    <div class="row">
+        <form method="POST" action="{% url 'main:voice' %}">{% csrf_token %}
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <p></p>
+                    <textarea readonly rows="22" style="height: 100%; width: 75%; display: block; margin-right: auto; margin-left: auto;" name="text">{{ text }}</textarea>
+                    <input type="hidden" name="text" value="{{ text }}">
+                    <p></p>
+                    <button type="submit" name="send" style="height: 15%; width: 75%; display: block; margin-right: auto; margin-left: auto;" class="btn btn-dark" href="{% url 'main:voice' %}">Generate speech</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}
