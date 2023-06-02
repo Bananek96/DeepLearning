@@ -8,6 +8,8 @@ app = Flask(__name__)
 class Tacotron:
     def __init__(self) -> None:
         self.model = torch.hub.load('NVIDIA/DeepLearningExamples:torchhub', 'nvidia_tacotron2', model_math='fp16')
+        state_dict = torch.load(r'D:\github\model', map_location="cpu")["state_dict"]
+        self.model.load_state_dict(state_dict)
         self.model = self.model.to('cuda')
 
         self.waveglow = torch.hub.load('NVIDIA/DeepLearningExamples:torchhub', 'nvidia_waveglow', model_math='fp16')
